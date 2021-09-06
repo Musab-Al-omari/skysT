@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:skys_tasks/screens/Widget/loading.dart';
 
 import 'package:skys_tasks/screens/authentication/logIn.dart';
 import 'package:skys_tasks/screens/authentication/signup.dart';
@@ -29,7 +30,15 @@ class MyApp extends StatelessWidget {
                   ),
                 ),
                 debugShowCheckedModeBanner: false,
-                home: authDat.isAuth ? mainScreen() : LoginPage(),
+                home: authDat.isAuth
+                    ? mainScreen()
+                    : FutureBuilder(
+                        future: authDat.tryAutoLogIn(),
+                        builder: (context, snapshot) =>
+                            snapshot.connectionState == ConnectionState.waiting
+                                ? Loading()
+                                : LoginPage(),
+                      ),
                 routes: {
                   LoginPage.LoginPagePageScreenRoute: (context) => LoginPage(),
                   SignUpPage.SignUpPageScreenRoute: (context) => SignUpPage(),

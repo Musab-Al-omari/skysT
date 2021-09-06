@@ -72,13 +72,24 @@ class Auth with ChangeNotifier {
       _autoLogOut();
       notifyListeners();
 
+      ///////////////////////////
+      // AUTO LOG IN IMPLEMENTATION
+      var prefs = await SharedPreferences.getInstance();
+      var userData = jsonEncode({
+        'token': _token,
+        'userId': _userId,
+        'expiryDate': _expiryDate.toIso8601String()
+      });
+      prefs.setString('mykey', userData);
+
+      /////////////////////
       return resData;
     } catch (e) {
       print(e);
     }
   }
 
-  void logOut() {
+  void logOut() async {
     _token = null;
     _expiryDate = null;
     _userId = null;
@@ -87,6 +98,8 @@ class Auth with ChangeNotifier {
       _authTimer = null;
     }
     notifyListeners();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('mykey');
   }
 
   void _autoLogOut() {
@@ -96,5 +109,28 @@ class Auth with ChangeNotifier {
     var timeToExpiry = _expiryDate.difference(DateTime.now()).inSeconds;
     print(timeToExpiry);
     _authTimer = Timer(Duration(seconds: timeToExpiry), logOut);
+  }
+
+  Future<bool> tryAutoLogIn() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (!prefs.containsKey('mykey')) {
+      return false;
+    }
+
+    var extractUserData =
+        json.decode(prefs.getString('mykey') as String) as Map<String, Object>;
+    final expiryDate = DateTime.parse(extractUserData['expiryDate'] as String);
+
+    if (expiryDate.isBefore(DateTime.now())) {
+      return false;
+    }
+
+    _token = extractUserData['token'];
+    _expiryDate = extractUserData['userId'];
+    _userId = extractUserData['expiryDate'];
+    notifyListeners();
+    _autoLogOut();
+
+    return true;
   }
 }
