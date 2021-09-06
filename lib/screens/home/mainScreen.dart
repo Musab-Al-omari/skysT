@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:skys_tasks/main.dart';
+import 'package:skys_tasks/screens/Widget/Drawer.dart';
 
 class mainScreen extends StatelessWidget {
   @override
@@ -11,6 +12,7 @@ class mainScreen extends StatelessWidget {
       body: Center(
         child: Text('no thing '),
       ),
+      drawer: AppDrawer(),
     );
   }
 }

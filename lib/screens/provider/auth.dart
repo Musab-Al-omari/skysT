@@ -1,13 +1,16 @@
 import 'dart:convert';
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:skys_tasks/models/httpException.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Auth with ChangeNotifier {
-  late String _token;
-  late DateTime _expiryDate;
-  late String _userId;
+  var _token;
+  var _expiryDate;
+  var _userId;
+  var _authTimer;
   static const apiKey = 'AIzaSyCLy-BSV9t6VkQ3q9n0jLPw85OpLwi82dg';
 
   bool get isAuth {
@@ -15,9 +18,7 @@ class Auth with ChangeNotifier {
   }
 
   get token {
-    if (_expiryDate != null &&
-        _expiryDate.isAfter(DateTime.now()) &&
-        _token != null) {
+    if (_expiryDate != null && _expiryDate.isAfter(DateTime.now())) {
       return _token;
     }
     return null;
@@ -37,13 +38,11 @@ class Auth with ChangeNotifier {
       final resData = jsonDecode(response.body);
       print('logup');
       if (resData['error'] != null) {
-        print('hi');
         throw HttpException(resData['error']['message']);
       } else {
         print(resData);
       }
     } catch (e) {
-      print('missing');
       print(e.toString());
     }
   }
@@ -59,10 +58,43 @@ class Auth with ChangeNotifier {
             "returnSecureToken": true
           }));
       final resData = jsonDecode(response.body);
-      print(resData);
+
+      // print(resData);
+
+      if (resData['localId'] != null &&
+          resData['email'] != null &&
+          resData['expiresIn'] != null) {
+        _token = resData['idToken'];
+        _userId = resData['localId'];
+        _expiryDate = DateTime.now()
+            .add(Duration(seconds: int.parse(resData['expiresIn'])));
+      }
+      _autoLogOut();
+      notifyListeners();
+
       return resData;
     } catch (e) {
       print(e);
     }
+  }
+
+  void logOut() {
+    _token = null;
+    _expiryDate = null;
+    _userId = null;
+    if (_authTimer != null) {
+      _authTimer.cancel();
+      _authTimer = null;
+    }
+    notifyListeners();
+  }
+
+  void _autoLogOut() {
+    if (_authTimer != null) {
+      _authTimer.cancel();
+    }
+    var timeToExpiry = _expiryDate.difference(DateTime.now()).inSeconds;
+    print(timeToExpiry);
+    _authTimer = Timer(Duration(seconds: timeToExpiry), logOut);
   }
 }
