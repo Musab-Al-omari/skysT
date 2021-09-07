@@ -7,6 +7,7 @@ class Articles with ChangeNotifier {
   final String description;
   final String publishedAt;
   final String imageUrl;
+  final String content;
   bool isFavorite;
 
   Articles({
@@ -16,6 +17,7 @@ class Articles with ChangeNotifier {
     required this.description,
     required this.publishedAt,
     required this.imageUrl,
+    required this.content,
     this.isFavorite = false,
   });
 

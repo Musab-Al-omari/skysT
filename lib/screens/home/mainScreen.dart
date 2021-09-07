@@ -24,15 +24,16 @@ class _mainScreenState extends State<mainScreen> {
     });
     try {
       var response = await http.get(Uri.parse(url),
-          headers: {'x-api-key': 'b4aa6f395a0d4f46a65cffd321e95b66'});
+          headers: {'x-api-key': 'aba21d07dd9b45c3ac766afc3d37e61c'});
       var data = jsonDecode(response.body);
       var listData = data['articles'] as List;
-
+      MyArticles.clear(); // before any search happen
       listData.forEach((value) {
         MyArticles.add(Articles(
             id: value['source']['id'] == null ? 'no id' : value['source']['id'],
             title: value['title'] == null ? 'no title' : value['title'],
             author: value['author'] == null ? 'no author' : value['author'],
+            content: value['content'] == null ? 'no author' : value['content'],
             description: value['description'] == null
                 ? 'no description'
                 : value['description'],
@@ -40,7 +41,7 @@ class _mainScreenState extends State<mainScreen> {
                 ? 'no publishedAt'
                 : value['publishedAt'],
             imageUrl: value['urlToImage'] == null
-                ? 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg'
+                ? 'assets\istockphoto-922962354-612x612.jpg'
                 : value['urlToImage']));
       });
     } catch (e) {
@@ -55,6 +56,7 @@ class _mainScreenState extends State<mainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.blue,
         title: Text('News App'),
       ),
       drawer: AppDrawer(),
@@ -63,7 +65,8 @@ class _mainScreenState extends State<mainScreen> {
               child: CircularProgressIndicator(),
             )
           : Container(
-              width: 500,
+              // height: MediaQuery.of(context).size.height * 0.2,
+              width: MediaQuery.of(context).size.width,
               child: Column(
                 children: [
                   Padding(
@@ -86,9 +89,43 @@ class _mainScreenState extends State<mainScreen> {
                       ],
                     ),
                   ),
-                  OneCard(),
+                  MyArticles.length == 0
+                      ? Container(
+                          margin: EdgeInsets.all(150),
+                          child: Text('There is no data '))
+                      : Expanded(
+                          child: ListView.builder(
+                            itemCount: MyArticles.length,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                margin: EdgeInsets.symmetric(
+                                    vertical: 5, horizontal: 7),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  border: Border.all(color: Colors.blue),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: OneCard(
+                                    MyArticles[index].id,
+                                    MyArticles[index].title,
+                                    MyArticles[index].author,
+                                    MyArticles[index].publishedAt,
+                                    MyArticles[index].imageUrl,
+                                    MyArticles[index].content,
+                                    MyArticles[index].description),
+                              );
+                            },
+                          ),
+                        )
                 ],
               )),
     );
   }
 }
+
+
+// ListView.builder(
+//                           itemCount: MyArticles.length,
+//                           itemBuilder: (context, index) => 
+
+                        

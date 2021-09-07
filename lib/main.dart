@@ -5,6 +5,7 @@ import 'package:skys_tasks/screens/Widget/loading.dart';
 
 import 'package:skys_tasks/screens/authentication/logIn.dart';
 import 'package:skys_tasks/screens/authentication/signup.dart';
+import 'package:skys_tasks/screens/home/detailScreen.dart';
 import 'package:skys_tasks/screens/home/mainScreen.dart';
 import 'package:skys_tasks/screens/provider/auth.dart';
 
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
                 routes: {
                   LoginPage.LoginPagePageScreenRoute: (context) => LoginPage(),
                   SignUpPage.SignUpPageScreenRoute: (context) => SignUpPage(),
+                  NewsDetails.MealDetailsRoute: (context) => NewsDetails(),
                 },
               )),
     );
