@@ -26,6 +26,7 @@ class AppDrawer extends StatelessWidget {
           ),
           DrawerBars(() {
             Navigator.of(context).pop();
+            Navigator.of(context).pushReplacementNamed('/');
             Provider.of<Auth>(context, listen: false).logOut();
           }, Icons.logout, 'logOut'),
         ],

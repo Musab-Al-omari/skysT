@@ -98,7 +98,7 @@ class Auth with ChangeNotifier {
       _authTimer = null;
     }
     notifyListeners();
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final prefs = await SharedPreferences.getInstance();
     prefs.remove('mykey');
   }
 
@@ -113,12 +113,14 @@ class Auth with ChangeNotifier {
 
   Future<bool> tryAutoLogIn() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+
     if (!prefs.containsKey('mykey')) {
       return false;
     }
 
-    var extractUserData =
-        json.decode(prefs.getString('mykey') as String) as Map<String, Object>;
+    Map<String, Object> extractUserData =
+        json.decode(prefs.getString('mykey') as String);
+    print(1);
     final expiryDate = DateTime.parse(extractUserData['expiryDate'] as String);
 
     if (expiryDate.isBefore(DateTime.now())) {

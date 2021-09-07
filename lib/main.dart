@@ -30,15 +30,16 @@ class MyApp extends StatelessWidget {
                   ),
                 ),
                 debugShowCheckedModeBanner: false,
-                home: authDat.isAuth
-                    ? mainScreen()
-                    : FutureBuilder(
-                        future: authDat.tryAutoLogIn(),
-                        builder: (context, snapshot) =>
-                            snapshot.connectionState == ConnectionState.waiting
-                                ? Loading()
-                                : LoginPage(),
-                      ),
+                home: mainScreen(),
+                // authDat.isAuth
+                //     ? mainScreen()
+                //     : FutureBuilder(
+                //         future: authDat.tryAutoLogIn(),
+                //         builder: (context, snapshot) =>
+                //             snapshot.connectionState == ConnectionState.waiting
+                //                 ? Loading()
+                //                 : LoginPage(),
+                //       ),
                 routes: {
                   LoginPage.LoginPagePageScreenRoute: (context) => LoginPage(),
                   SignUpPage.SignUpPageScreenRoute: (context) => SignUpPage(),
