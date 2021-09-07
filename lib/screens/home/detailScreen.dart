@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class NewsDetails extends StatelessWidget {
-  static const MealDetailsRoute = '/news-details';
+  static const NewsDetailsRoute = '/news-details';
 
   Widget buildContainer(text, child, context) {
     return Column(
@@ -48,6 +51,50 @@ class NewsDetails extends StatelessWidget {
     final imageUrl = detailsItem['imageUrl'];
     final content = detailsItem['content'];
     final description = detailsItem['description'];
+
+    void _addToNewsReaded() async {
+      var url =
+          'https://skystasks-default-rtdb.europe-west1.firebasedatabase.app/read.json';
+
+      try {
+        final response = await http.post(Uri.parse(url),
+            body: jsonEncode({
+              'myId': _id,
+              'title': title,
+              'author': author,
+              'publishedAt': publishedAt,
+              'imageUrl': imageUrl,
+              'content': content,
+              'description': description,
+            }));
+        final resData = jsonDecode(response.body);
+        print(resData);
+      } catch (e) {
+        print(e);
+      }
+    }
+
+    void _addToNewsfavorite() async {
+      var url =
+          'https://skystasks-default-rtdb.europe-west1.firebasedatabase.app/favorite.json';
+
+      try {
+        final response = await http.post(Uri.parse(url),
+            body: jsonEncode({
+              'myId': _id,
+              'title': title,
+              'author': author,
+              'publishedAt': publishedAt,
+              'imageUrl': imageUrl,
+              'content': content,
+              'description': description,
+            }));
+        final resData = jsonDecode(response.body);
+        print(resData);
+      } catch (e) {
+        print(e);
+      }
+    }
 
     return Scaffold(
         appBar: AppBar(title: Text(title!)),
@@ -107,7 +154,7 @@ class NewsDetails extends StatelessWidget {
               FloatingActionButton(
                 backgroundColor: Colors.blue.shade400,
                 heroTag: "btn",
-                onPressed: () {},
+                onPressed: _addToNewsReaded,
                 child: Icon(Icons.favorite),
               ),
               SizedBox(
@@ -116,7 +163,7 @@ class NewsDetails extends StatelessWidget {
               FloatingActionButton(
                 backgroundColor: Colors.blue.shade400,
                 heroTag: "btn2",
-                onPressed: () {},
+                onPressed: _addToNewsfavorite,
                 child: Icon(Icons.read_more),
               )
             ],
