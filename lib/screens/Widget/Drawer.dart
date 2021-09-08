@@ -36,14 +36,14 @@ class AppDrawer extends StatelessWidget {
                 ),
                 DrawerBars(() {
                   Navigator.of(context)
-                      .pushNamed('/ReadFavoritRoute', arguments: 'favorite');
+                      .pushNamed('/favoriteRoute', arguments: 'favorite');
                 }, Icons.favorite_rounded, 'Favorite Screen'),
                 SizedBox(
                   height: 10,
                 ),
                 DrawerBars(() {
                   Navigator.of(context)
-                      .pushNamed('/ReadFavoritRoute', arguments: 'read');
+                      .pushNamed('/ReadRoute', arguments: 'read');
                 }, Icons.read_more, 'Read Screen'),
                 SizedBox(
                   height: 10,
