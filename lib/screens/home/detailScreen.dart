@@ -100,7 +100,6 @@ class NewsDetails extends StatelessWidget {
               'description': description,
             }));
         final resData = jsonDecode(response.body);
-        print(resData);
       } catch (e) {
         print(e);
       }
@@ -123,7 +122,6 @@ class NewsDetails extends StatelessWidget {
               'description': description,
             }));
         final resData = jsonDecode(response.body);
-        print(resData);
       } catch (e) {
         print(e);
       }

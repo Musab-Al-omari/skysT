@@ -91,7 +91,8 @@ class _mainScreenState extends State<mainScreen> {
                   ),
                   MyArticles.length == 0
                       ? Container(
-                          margin: EdgeInsets.all(150),
+                          margin:
+                              EdgeInsets.only(top: 150, right: 150, left: 150),
                           child: Text('There is no data '))
                       : Expanded(
                           child: ListView.builder(

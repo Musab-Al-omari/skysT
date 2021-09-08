@@ -83,7 +83,6 @@ class _LoginPageState extends State<LoginPage> {
             signInData['Email'] as String, signInData['password'] as String);
 
         if (data['error'] != null) {
-          print(data['error']);
           _alert(data['error']['message']);
         }
       } catch (err) {

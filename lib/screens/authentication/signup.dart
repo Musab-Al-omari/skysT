@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:skys_tasks/screens/Widget/bezierContainer.dart';
@@ -69,6 +70,7 @@ class _SignUpPageState extends State<SignUpPage> {
     Future<void> _submited() async {
       await Provider.of<Auth>(context, listen: false)
           .signUp(userName, email, password, phoneNumber);
+      Navigator.of(context).pushReplacementNamed('/');
     }
 
     return InkWell(
@@ -188,14 +190,14 @@ class _SignUpPageState extends State<SignUpPage> {
                     SizedBox(height: height * .2),
                     _title(),
                     SizedBox(
-                      height: 50,
+                      height: 20,
                     ),
                     _emailPasswordWidget(),
                     SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
                     _submitButton(),
-                    SizedBox(height: height * .14),
+                    SizedBox(height: height * .04),
                     _loginAccountLabel(),
                   ],
                 ),
