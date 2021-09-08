@@ -67,11 +67,6 @@ class _SignUpPageState extends State<SignUpPage> {
 
   Widget _submitButton() {
     Future<void> _submited() async {
-      print(userName);
-      print(email);
-      print(password);
-      print(phoneNumber);
-
       await Provider.of<Auth>(context, listen: false)
           .signUp(userName, email, password, phoneNumber);
     }
@@ -94,7 +89,7 @@ class _SignUpPageState extends State<SignUpPage> {
             gradient: LinearGradient(
                 begin: Alignment.centerLeft,
                 end: Alignment.centerRight,
-                colors: [Color(0xfffbb448), Color(0xfff7892b)])),
+                colors: [Colors.blue.shade200, Colors.blue.shade900])),
         child: Text(
           'Register Now',
           style: TextStyle(fontSize: 20, color: Colors.white),
@@ -125,7 +120,7 @@ class _SignUpPageState extends State<SignUpPage> {
             Text(
               'Login',
               style: TextStyle(
-                  color: Color(0xfff79c4f),
+                  color: Colors.blue.shade900,
                   fontSize: 13,
                   fontWeight: FontWeight.w600),
             ),
@@ -139,14 +134,23 @@ class _SignUpPageState extends State<SignUpPage> {
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(
-        text: 'my app',
-        style: GoogleFonts.portLligatSans(
-          textStyle: Theme.of(context).textTheme.bodyText1,
-          fontSize: 30,
-          fontWeight: FontWeight.w700,
-          color: Color(0xffe46b10),
-        ),
-      ),
+          text: 'News',
+          style: GoogleFonts.portLligatSans(
+            textStyle: Theme.of(context).textTheme.bodyText1,
+            fontSize: 30,
+            fontWeight: FontWeight.w700,
+            color: Colors.blue.shade900,
+          ),
+          children: [
+            TextSpan(
+              text: 'pap',
+              style: TextStyle(color: Colors.black, fontSize: 30),
+            ),
+            TextSpan(
+              text: 'er',
+              style: TextStyle(color: Colors.blue.shade200, fontSize: 30),
+            ),
+          ]),
     );
   }
 

@@ -25,9 +25,8 @@ class _FavoriteState extends State<Favorite> {
         _isLoading = true;
       });
       var url =
-          'https://skystasks-default-rtdb.europe-west1.firebasedatabase.app/$_detailsItem.json';
+          'https://skystasks-default-rtdb.europe-west1.firebasedatabase.app/favorite.json';
       try {
-        print(_detailsItem);
         final _response = await http.get(Uri.parse(url));
         var _resData = jsonDecode(_response.body);
         _MyArticles = [];
@@ -48,8 +47,7 @@ class _FavoriteState extends State<Favorite> {
       } catch (e) {
         print(e);
       }
-      print(_MyArticles.length);
-      print(_MyArticles[0].author);
+
       setState(() {
         _isLoading = false;
       });
@@ -64,7 +62,7 @@ class _FavoriteState extends State<Favorite> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
-        title: Text(_detailsItem),
+        title: Text('favorite'),
       ),
       drawer: AppDrawer(),
       body: _isLoading
@@ -72,7 +70,6 @@ class _FavoriteState extends State<Favorite> {
               child: CircularProgressIndicator(),
             )
           : Container(
-              // height: MediaQuery.of(context).size.height * 0.2,
               width: MediaQuery.of(context).size.width,
               child: Column(
                 children: [

@@ -31,16 +31,17 @@ class MyApp extends StatelessWidget {
                   ),
                 ),
                 debugShowCheckedModeBanner: false,
-                home: mainScreen(),
-                // authDat.isAuth
-                //     ? mainScreen()
-                //     : FutureBuilder(
-                //         future: authDat.tryAutoLogIn(),
-                //         builder: (context, snapshot) =>
-                //             snapshot.connectionState == ConnectionState.waiting
-                //                 ? Loading()
-                //                 : LoginPage(),
-                //       ),
+                home: authDat.isAuth
+                    ? mainScreen()
+                    : FutureBuilder(
+                        future: authDat.tryAutoLogIn(),
+                        builder: (context, snapshot) =>
+                            snapshot.connectionState == ConnectionState.waiting
+                                ? Center(
+                                    child: CircularProgressIndicator(),
+                                  )
+                                : LoginPage(),
+                      ),
                 routes: {
                   LoginPage.LoginPagePageScreenRoute: (context) => LoginPage(),
                   SignUpPage.SignUpPageScreenRoute: (context) => SignUpPage(),

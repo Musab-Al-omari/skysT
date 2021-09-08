@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:skys_tasks/screens/home/FavoriteScreen.dart';
+import 'package:skys_tasks/screens/home/ReadScreen.dart';
 
 class NewsDetails extends StatelessWidget {
   static const NewsDetailsRoute = '/news-details';
@@ -52,6 +54,36 @@ class NewsDetails extends StatelessWidget {
     final content = detailsItem['content'];
     final description = detailsItem['description'];
 
+    void _alert(
+      String text,
+      route,
+    ) {
+      showDialog(
+          context: context,
+          builder: (ctx) {
+            return AlertDialog(
+              title: Text(
+                'You save ',
+              ),
+              content: Text('do you want to go to your $text Screen ?'),
+              actions: [
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(ctx).pop();
+                    },
+                    child: Text('No')),
+                ElevatedButton(
+                    onPressed: () {
+                      // route
+                      Navigator.of(context)
+                          .pushReplacementNamed(route, arguments: text);
+                    },
+                    child: Text('Yes'))
+              ],
+            );
+          });
+    }
+
     void _addToNewsReaded() async {
       var url =
           'https://skystasks-default-rtdb.europe-west1.firebasedatabase.app/read.json';
@@ -72,6 +104,7 @@ class NewsDetails extends StatelessWidget {
       } catch (e) {
         print(e);
       }
+      _alert('read ', Read.ReadRoute);
     }
 
     void _addToNewsfavorite() async {
@@ -94,6 +127,7 @@ class NewsDetails extends StatelessWidget {
       } catch (e) {
         print(e);
       }
+      _alert('favorite', Favorite.FavoriteRoute);
     }
 
     return Scaffold(
@@ -110,7 +144,6 @@ class NewsDetails extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                 ),
-                // buildTitleSection(context, title),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -154,7 +187,7 @@ class NewsDetails extends StatelessWidget {
               FloatingActionButton(
                 backgroundColor: Colors.blue.shade400,
                 heroTag: "btn",
-                onPressed: _addToNewsReaded,
+                onPressed: _addToNewsfavorite,
                 child: Icon(Icons.favorite),
               ),
               SizedBox(
@@ -163,7 +196,7 @@ class NewsDetails extends StatelessWidget {
               FloatingActionButton(
                 backgroundColor: Colors.blue.shade400,
                 heroTag: "btn2",
-                onPressed: _addToNewsfavorite,
+                onPressed: _addToNewsReaded,
                 child: Icon(Icons.read_more),
               )
             ],

@@ -25,7 +25,7 @@ class _ReadState extends State<Read> {
         isLoading = true;
       });
       var url =
-          'https://skystasks-default-rtdb.europe-west1.firebasedatabase.app/$detailsItem.json';
+          'https://skystasks-default-rtdb.europe-west1.firebasedatabase.app/read.json';
       try {
         print(detailsItem);
         final response = await http.get(Uri.parse(url));
@@ -48,23 +48,16 @@ class _ReadState extends State<Read> {
       } catch (e) {
         print(e);
       }
-      print(MyArticles.length);
-      print(MyArticles[0].author);
+
       setState(() {
         isLoading = false;
       });
     }
 
-    // @override
-    // void initState() {
-    //   Future.delayed(Duration.zero).then((_) => fetchDate());
-    //   super.initState();
-    // }
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
-        title: Text(detailsItem),
+        title: Text('read'),
       ),
       drawer: AppDrawer(),
       body: isLoading

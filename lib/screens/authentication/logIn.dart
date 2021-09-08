@@ -73,6 +73,11 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _submitButton() {
     Future<void> _submited() async {
+      if (signInData['Email'] == '' || signInData['password'] == '') {
+        _alert(
+            'the Email field or the password field or both are empty fill them');
+        return;
+      }
       try {
         var data = await Provider.of<Auth>(context, listen: false).signin(
             signInData['Email'] as String, signInData['password'] as String);
@@ -104,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
             gradient: LinearGradient(
                 begin: Alignment.centerLeft,
                 end: Alignment.centerRight,
-                colors: [Color(0xfffbb448), Color(0xfff7892b)])),
+                colors: [Colors.blue.shade900, Colors.blue.shade200])),
         child: Text(
           'Login',
           style: TextStyle(fontSize: 20, color: Colors.white),
@@ -135,7 +140,7 @@ class _LoginPageState extends State<LoginPage> {
             Text(
               'Register',
               style: TextStyle(
-                  color: Color(0xfff79c4f),
+                  color: Colors.blue.shade900,
                   fontSize: 13,
                   fontWeight: FontWeight.w600),
             ),
@@ -149,21 +154,21 @@ class _LoginPageState extends State<LoginPage> {
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(
-          text: 'd',
+          text: 'News',
           style: GoogleFonts.portLligatSans(
             textStyle: Theme.of(context).textTheme.bodyText1,
             fontSize: 30,
             fontWeight: FontWeight.w700,
-            color: Color(0xffe46b10),
+            color: Colors.blue.shade900,
           ),
           children: [
             TextSpan(
-              text: 'ev',
+              text: 'pap',
               style: TextStyle(color: Colors.black, fontSize: 30),
             ),
             TextSpan(
-              text: 'rnz',
-              style: TextStyle(color: Color(0xffe46b10), fontSize: 30),
+              text: 'er',
+              style: TextStyle(color: Colors.blue.shade200, fontSize: 30),
             ),
           ]),
     );
