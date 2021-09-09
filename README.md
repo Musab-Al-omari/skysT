@@ -1,6 +1,6 @@
 # skys_tasks
 
-A new Flutter project. that i make for sky line company as a Task
+A new Flutter project. that i make for sky line company as a Task base on news paper api 'https://newsapi.org/v2/everything?q=$term';
 
 ## what do i learn by building this project ?
 1. styling the Widget and make the themes
